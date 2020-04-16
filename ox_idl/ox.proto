@@ -1,0 +1,114 @@
+syntax = "proto3";
+package ox_idl;
+
+
+service OX {
+    rpc GetTicketsByID (TicketRequest) returns (stream Ticket) {
+    }
+    rpc GetAttendeesStatus (TicketRequest) returns (AttendeesStatus) {
+    }
+    rpc ConfirmAttendee (ConfirmAttendeeTicket) returns (Response) {
+    }
+    rpc PrintAttendeeTicket (PrintTicketRequest) returns (PrintTicketResponse) {
+    }
+    rpc PrintAllAttendeeTickets (PrintAllTicketsRequest) returns (PrintAllTicketsResponse) {
+    }
+}
+
+message TicketRequest {
+    string id = 1;
+}
+
+message TicketStatsRequest {
+    string userID = 1;
+    string ticketID = 2;
+}
+
+message Ticket {
+    string ticketID = 1;
+    string eventID = 2;
+    string userID = 3;
+    string company = 4;
+    string venueCity = 5;
+    string venueName = 6;
+    string startDate = 7;
+    string startTime = 8;
+    string eventName = 9;
+    double amount = 10;
+    string image = 11;
+    string logo = 12;
+    int64 purchasedOn = 13;
+    string timeZone = 14;
+    string zone = 15;
+    int32 visitors = 16;
+    int32 attendees = 17;
+    string endDate = 18;
+    string endTime = 19;
+    string ticketTimeZone = 20;
+    string ticketZone = 21;
+    string currency = 22;
+}
+
+message AttendeesStatus {
+    int32 visitorCount = 1;
+    int32 attendeeCount = 2;
+}
+
+message ConfirmAttendeeTicket {
+    string ticketId = 1;
+    string userId = 2;
+}
+
+message Response {
+    string status = 1;
+    string message = 2;
+}
+
+message PrintTicketRequest {
+    string ticket_id = 1;
+    string attendee_id = 2;
+}
+
+message EventInfo {
+    string event_name = 1;
+    string start_date = 2;
+    string start_time = 3;
+    string venue = 4;
+    string organizer = 5;
+    string ticket_name = 6;
+}
+
+message TicketInfo {
+    string event_id = 1;
+    string purchased_by = 2;
+    int64 purchased_on = 3;
+    Attendee attendee = 4;
+    string ticket_number = 5;
+}
+
+message Attendee {
+    string email = 1;
+    string name = 2;
+}
+
+message PrintTicketResponse {
+    EventInfo event = 1;
+    TicketInfo ticket = 2;
+}
+
+message PrintAllTicketsRequest {
+    string ticket_id = 1;
+}
+
+message AllTicketsInfo {
+    string event_id = 1;
+    string purchased_by = 2;
+    int64 purchased_on = 3;
+    repeated Attendee attendees = 4;
+    string ticket_number = 5;
+}
+
+message PrintAllTicketsResponse {
+    EventInfo event = 1;
+    AllTicketsInfo ticket = 2;
+}
